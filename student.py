@@ -1,4 +1,5 @@
 from datetime import date, timedelta
+import requests
 
 
 class Student:
@@ -24,3 +25,16 @@ class Student:
     def alert_santa(self):
         """"checks if student is on santa list"""
         self.naughty_list = True
+
+    def apply_extension(self, days):
+        """"checks if student end date has days added on given in parameter"""
+        self.end_date = self.end_date + timedelta(days=days)
+
+    def course_schedule(self):
+        """checks if connection is made with server"""
+        response = requests.get(f"http://company.com/course-schedule/{self._last_name}/{self._first_name}")
+
+        if response.ok:
+            return response.text
+        else:
+            return "Something went wrong with the request!"
